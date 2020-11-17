@@ -21,9 +21,6 @@ public class AcaoController {
     @Autowired
     public AcaoRepository acaoRepository;
 
-    @Autowired
-    public ExecucaoRepository execucaoRepository;
-
     @GetMapping()
 	@ApiOperation(value = "Retorna uma lista de ações")
 	public ResponseEntity<List<AcaoModel>> findAll(Model model) {
@@ -53,6 +50,15 @@ public class AcaoController {
 		return ResponseEntity.created(location).build();
 	}
 
+	@PutMapping("/{id}")
+	@ApiOperation(value = "Atualiza uma ação a partir do identificador")
+	public ResponseEntity update(@PathVariable("id") long id, @RequestBody @Valid AcaoModel acaoModel)  {
+
+
+		acaoModel.setId(id);
+		acaoRepository.save(acaoModel);
+		return ResponseEntity.ok().build();
+	}
 
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "Exclui uma ação a partir do identificador")
