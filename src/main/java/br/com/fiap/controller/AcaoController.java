@@ -53,4 +53,13 @@ public class AcaoController {
 		return ResponseEntity.created(location).build();
 	}
 
+
+	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Exclui uma ação a partir do identificador")
+	public ResponseEntity deleteById(@PathVariable("id") long id) {
+
+		acaoRepository.deleteById(id);
+		return ResponseEntity.noContent().build();
+	}
+
 }
