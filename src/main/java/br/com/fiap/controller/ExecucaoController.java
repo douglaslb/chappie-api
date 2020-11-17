@@ -1,0 +1,46 @@
+package br.com.fiap.controller;
+
+
+import br.com.fiap.model.AcaoModel;
+import br.com.fiap.model.ExecucaoModel;
+import br.com.fiap.repository.AcaoRepository;
+import br.com.fiap.repository.ExecucaoRepository;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/execucao")
+public class ExecucaoController {
+
+    @Autowired
+    public ExecucaoRepository execucaoRepository;
+
+    @Autowired
+    public AcaoRepository acaoRepository;
+
+
+    @GetMapping()
+	@ApiOperation(value = "Retorna uma lista de execuções de ação")
+	public ResponseEntity<List<ExecucaoModel>> findAll(Model model) {
+
+ 		List<ExecucaoModel> execucoes = execucaoRepository.findAll();
+		return ResponseEntity.ok(execucoes);
+	}
+
+	@GetMapping("/{id}")
+	@ApiOperation(value = "Retorna uma execução a partir do identificador")
+	public ResponseEntity<ExecucaoModel> findById(@PathVariable("id") long id) {
+
+		ExecucaoModel execucao = execucaoRepository.findById(id).get();
+		return ResponseEntity.ok(execucao);
+	}
+
+}
