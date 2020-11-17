@@ -7,11 +7,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -38,6 +38,19 @@ public class AcaoController {
 
 		AcaoModel acao = acaoRepository.findById(id).get();
 		return ResponseEntity.ok(acao);
+	}
+
+	@PostMapping()
+	@ApiOperation(value = "Salva uma nova ação")
+	public ResponseEntity save(@RequestBody @Valid AcaoModel acaoModel)  {
+
+
+		acaoRepository.save(acaoModel);
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(acaoModel.getId()).toUri();
+
+		return ResponseEntity.created(location).build();
 	}
 
 }
