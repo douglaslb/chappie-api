@@ -1,19 +1,17 @@
 package br.com.fiap.controller;
 
 
-import br.com.fiap.model.AcaoModel;
 import br.com.fiap.model.ExecucaoModel;
-import br.com.fiap.repository.AcaoRepository;
 import br.com.fiap.repository.ExecucaoRepository;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -23,8 +21,6 @@ public class ExecucaoController {
     @Autowired
     public ExecucaoRepository execucaoRepository;
 
-    @Autowired
-    public AcaoRepository acaoRepository;
 
 
     @GetMapping()
@@ -41,6 +37,19 @@ public class ExecucaoController {
 
 		ExecucaoModel execucao = execucaoRepository.findById(id).get();
 		return ResponseEntity.ok(execucao);
+	}
+
+	@PostMapping()
+	@ApiOperation(value = "Salva uma nova execução")
+	public ResponseEntity save(@RequestBody @Valid ExecucaoModel execucaoModel)  {
+
+
+		execucaoRepository.save(execucaoModel);
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(execucaoModel.getId()).toUri();
+
+		return ResponseEntity.created(location).build();
 	}
 
 }
