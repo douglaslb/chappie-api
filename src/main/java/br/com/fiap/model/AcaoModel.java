@@ -1,5 +1,7 @@
 package br.com.fiap.model;
 
+import jdk.jfr.BooleanFlag;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,7 +13,7 @@ public class AcaoModel {
     private long id;
     private String nome;
     private String descricao;
-    private boolean ativo;
+    private Boolean ativo;
 
     public AcaoModel() {
     }
@@ -59,11 +61,11 @@ public class AcaoModel {
 
     @Column(name = "ATIVO")
     @NotNull(message = "Ativo (status) é obrigatório")
-    public boolean getAtivo() {
+    public Boolean getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(boolean ativo) {
+    public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
     }
 }
