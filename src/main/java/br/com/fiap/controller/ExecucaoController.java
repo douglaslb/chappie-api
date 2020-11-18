@@ -1,6 +1,8 @@
 package br.com.fiap.controller;
 
 
+import br.com.fiap.business.ExecucaoBusiness;
+import br.com.fiap.exception.ResponseBusinessException;
 import br.com.fiap.model.ExecucaoModel;
 import br.com.fiap.repository.ExecucaoRepository;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +23,8 @@ public class ExecucaoController {
     @Autowired
     public ExecucaoRepository execucaoRepository;
 
+    @Autowired
+	public ExecucaoBusiness execucaoBusiness;
 
 
     @GetMapping()
@@ -41,10 +45,11 @@ public class ExecucaoController {
 
 	@PostMapping()
 	@ApiOperation(value = "Salva uma nova execução")
-	public ResponseEntity save(@RequestBody @Valid ExecucaoModel execucaoModel)  {
+	public ResponseEntity save(@RequestBody @Valid ExecucaoModel execucaoModel) throws ResponseBusinessException {
 
+    	ExecucaoModel execucao = execucaoBusiness.applyBusiness(execucaoModel);
 
-		execucaoRepository.save(execucaoModel);
+		execucaoRepository.save(execucao);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(execucaoModel.getId()).toUri();
