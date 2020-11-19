@@ -29,7 +29,7 @@ public class ExecucaoBusiness {
     public ExecucaoModel applyBusiness(ExecucaoModel execucao) throws ResponseBusinessException {
         verifyActionStatus(execucao.getAcao());
 
-        ZonedDateTime currentDate = getCurrentDate(execucao);
+        ZonedDateTime currentDate = getCurrentDate();
 
         formatDateToString(currentDate, execucao);
 
@@ -45,7 +45,7 @@ public class ExecucaoBusiness {
         }
     }
 
-    protected ZonedDateTime getCurrentDate(ExecucaoModel execucao) throws ResponseBusinessException {
+    protected ZonedDateTime getCurrentDate() throws ResponseBusinessException {
 
         ZonedDateTime currentDate = ZonedDateTime.now();
 
@@ -53,7 +53,7 @@ public class ExecucaoBusiness {
     }
 
     protected void formatDateToString(ZonedDateTime currentDate, ExecucaoModel execucao) throws ResponseBusinessException {
-        String formattedDate = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH                                                                                                                                                                                                                                                                                                                                                                     :mm").format(currentDate);
+        String formattedDate = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm").format(currentDate);
 
         execucao.setdataExecucao(formattedDate);
     }
