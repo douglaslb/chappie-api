@@ -68,4 +68,10 @@ public class AcaoModel {
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
     }
+
+    @Override
+	public String toString() {
+		return "AcaoModel [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", descricao=" + descricao + ", ativo="
+				+ ativo + "]";
+	}
 }
