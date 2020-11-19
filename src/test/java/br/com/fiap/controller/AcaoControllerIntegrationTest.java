@@ -66,9 +66,9 @@ public class AcaoControllerIntegrationTest {
     @DisplayName("Deve atualizar uma ação pelo id e retornar status 200")
     public void shouldUpdateAction() throws Exception {
 
-        mvc.perform(put("/acao/2")
+        mvc.perform(put("/acao/4")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"nome\":\"Voar\",\"descricao\":\"O Robô CHAPPiE deve ser capaz de voar\",\"ativo\":false}"))
+                .content("{\"nome\":\"Comer\",\"descricao\":\"O Robô CHAPPiE deve ser capaz de comer\",\"ativo\":true}"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
