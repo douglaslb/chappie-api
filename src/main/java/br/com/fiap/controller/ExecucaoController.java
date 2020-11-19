@@ -3,6 +3,7 @@ package br.com.fiap.controller;
 
 import br.com.fiap.business.ExecucaoBusiness;
 import br.com.fiap.exception.ResponseBusinessException;
+import br.com.fiap.model.AcaoModel;
 import br.com.fiap.model.ExecucaoModel;
 import br.com.fiap.repository.ExecucaoRepository;
 import io.swagger.annotations.ApiOperation;
@@ -57,4 +58,24 @@ public class ExecucaoController {
 		return ResponseEntity.created(location).build();
 	}
 
+
+	@PutMapping("/{id}")
+	@ApiOperation(value = "Atualiza uma execução a partir do identificador")
+	public ResponseEntity update(@PathVariable("id") long id, @RequestBody @Valid ExecucaoModel execucaoModel) throws ResponseBusinessException {
+
+    	ExecucaoModel execucao = execucaoBusiness.applyBusiness(execucaoModel);
+
+
+		execucaoModel.setId(id);
+		execucaoRepository.save(execucao);
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Exclui uma execução a partir do identificador")
+	public ResponseEntity deleteById(@PathVariable("id") long id) {
+
+		execucaoRepository.deleteById(id);
+		return ResponseEntity.noContent().build();
+	}
 }
