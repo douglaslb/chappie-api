@@ -2,6 +2,11 @@ package br.com.fiap.model;
 
 
 import javax.persistence.*;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -9,13 +14,13 @@ import java.util.Date;
 public class ExecucaoModel {
     private long id;
     private AcaoModel acao;
-    private Date dataExecucao;
+    private String dataExecucao;
 
     public ExecucaoModel() {
 
     }
 
-    public ExecucaoModel(long id, AcaoModel acao, Date dataExecucao) {
+    public ExecucaoModel(long id, AcaoModel acao, String dataExecucao) {
         this.id = id;
         this.acao = acao;
         this.dataExecucao = dataExecucao;
@@ -44,12 +49,18 @@ public class ExecucaoModel {
     }
 
     @Column(name = "DATA_EXECUCAO")
-    public Date getdataExecucao() {
+    public String getdataExecucao() {
         return dataExecucao;
     }
 
-    public void setdataExecucao(Date dataExecucao) {
+    public void setdataExecucao(String dataExecucao) {
+        System.out.println(dataExecucao);
         this.dataExecucao = dataExecucao;
     }
+
+    @Override
+	public String toString() {
+		return "Execucao [id_execucao=" + id + ", acao=" + acao + ", dataExecucao=" + dataExecucao + "]";
+	}
 }
 
